@@ -35,6 +35,7 @@ src/static/scripts/javascript/src/backbone.js
 # all CoffeeScript files will be compiled into this directory prior
 # to being optimized
 src/static/scripts/javascript/src/common
+src/static/scripts/javascript/src/common.js
 
 # all Sass files will be compiled into this directory
 src/static/stylesheets/css
