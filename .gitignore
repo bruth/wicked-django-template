@@ -13,18 +13,26 @@ MANIFEST
 local_settings.py
 
 # ignore optimized javascripts
-static/scripts/javascript/min
+src/static/scripts/javascript/min
 
-# ignore submodule derived files
+# ignore submodule derived files. uncomment the below lines if you want
+# to rebuild all the submodule code all for each checkout. html5-boilerplate
+# files copied into _site should not be ignored since those files are intended
+# to be changed to fit the site's requirements
 bin/r.js
-static/stylesheets/scss/coriander
+src/static/stylesheets/scss/bourbon
+src/static/stylesheets/scss/bootstrap
+src/static/scripts/coffeescript/common
+src/static/scripts/javascript/src/order.js
+src/static/scripts/javascript/src/require.js
+src/static/scripts/javascript/src/jquery.js
+src/static/scripts/javascript/src/r.js
+src/static/scripts/javascript/src/underscore.js
+src/static/scripts/javascript/src/backbone.js
 
 # all CoffeeScript files will be compiled into this directory prior
 # to being optimized
-static/scripts/javascript/src
+src/static/scripts/javascript/src/common
 
 # all Sass files will be compiled into this directory
-static/stylesheets/css
-
-# ignore collected static files
-_static
+src/static/stylesheets/css

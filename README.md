@@ -1,6 +1,5 @@
 Bada$$ Django Template
 ======================
-
 - clean project structure
     - separate ``src`` directory for Django code
     - ``_site`` directory for web server document root

@@ -31,7 +31,6 @@ dist: build
 
 collect: build
 	@echo 'Symlinking static files...'
-	@rm -rf ${SITE_DIR}/static
 	@${MANAGE_SCRIPT} collectstatic --link --noinput > /dev/null
 
 sass:
@@ -65,24 +64,27 @@ init-submodules:
 		fi; \
 	fi;
 
+# note: html5-boilerplate is not included here since it may overwrite
+# custom settings
 build-submodules: init-submodules bourbon r.js jquery backbone underscore \
-	requirejs backbone-common sass-twitter-bootstrap html5-boilerplate
+	requirejs backbone-common sass-twitter-bootstrap
+
+html5-boilerplate:
+	@echo 'Setting up HTML5 boilerplate...'
+	@cp -r ./modules/html5-boilerplate/*.{png,xml,ico,txt} \
+		./modules/html5-boilerplate/.htaccess ${SITE_DIR}
 
 bourbon:
 	@echo 'Setting up bourbon...'
 	@cd ./modules/bourbon && rake generate
 	@rm -rf ${SASS_DIR}/bourbon
-	@cp -r ./modules/bourbon/lib/bourbon ${SASS_DIR}/bourbon
+	@cp -r ./modules/bourbon/bourbon ${SASS_DIR}/bourbon
 
 r.js:
 	@echo 'Setting up r.js...'
 	@cd ./modules/r.js && node dist.js
 	@mkdir -p ./bin
 	@cp ./modules/r.js/r.js ./bin
-
-html5-boilerplate:
-	@echo 'Setting up HTML5 boilerplate...'
-	@cp -r ./modules/html5-boilerplate/*.{png,xml,ico,txt,htaccess} ${SITE_DIR}
 
 sass-twitter-bootstrap:
 	@echo 'Setting up Sass Twitter Bootstrap...'
@@ -96,21 +98,21 @@ backbone-common:
 
 requirejs:
 	@echo 'Setting up RequireJS...'
-	@cp ./modules/requirejs/require.js ${JAVASCRIPT_SRC_DIR}/vendor/require.js
+	@cp ./modules/requirejs/require.js ${JAVASCRIPT_SRC_DIR}/require.js
 	@cp ./modules/requirejs/order.js ${JAVASCRIPT_SRC_DIR}/order.js
 
 jquery:
 	@echo 'Setting up jQuery...'
-	@cd ./modules/jquery && make
-	@cp ./modules/jquery/dist/jquery.js ${JAVASCRIPT_SRC_DIR}/vendor/jquery.js
+	@cd ./modules/jquery && make update_submodules jquery
+	@cp ./modules/jquery/dist/jquery.js ${JAVASCRIPT_SRC_DIR}/jquery.js
 
 backbone:
 	@echo 'Setting up Backbone...'
-	@cp ./modules/backbone/backbone.js ${JAVASCRIPT_SRC_DIR}/vendor/backbone.js
+	@cp ./modules/backbone/backbone.js ${JAVASCRIPT_SRC_DIR}/backbone.js
 
 underscore:
 	@echo 'Setting up Underscore...'
-	@cp ./modules/underscore/underscore.js ${JAVASCRIPT_SRC_DIR}/vendor/underscore.js
+	@cp ./modules/underscore/underscore.js ${JAVASCRIPT_SRC_DIR}/underscore.js
 
 optimize: rjs clean
 	@echo 'Optimizing JavaScript...'
@@ -118,8 +120,12 @@ optimize: rjs clean
 	@${REQUIRE_OPTIMIZE} > /dev/null
 
 clean:
-	@rm -rf ${JAVASCRIPT_MIN_DIR}
-	@rm -rf ${CSS_DIR}
+	@rm -rf ${JAVASCRIPT_MIN_DIR} \
+		${CSS_DIR} \
+		bin/r.js \
+		src/static/stylesheets/scss/{bourbon,bootstrap} \
+		src/static/scripts/coffeescript/common \
+		src/static/scripts/javascript/src/{order,require,r,jquery,underscore,backbone}.js
 
 secret-key:
 	@echo Generating unique secret key...
