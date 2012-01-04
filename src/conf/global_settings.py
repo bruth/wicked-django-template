@@ -17,9 +17,9 @@ INSTALLED_APPS = (
     'core',
 
     # third-party apps
-    'south',
-    'sithauth',
     'grappelli',
+    # 'siteauth',
+    # 'south',
     
     # built-in Django apps
     'django.contrib.admin',
