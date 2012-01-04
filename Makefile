@@ -29,7 +29,7 @@ dist: build
 	@echo 'Creating a source distributions...'
 	@python setup.py sdist > /dev/null
 
-collect: build
+collect:
 	@echo 'Symlinking static files...'
 	@${MANAGE_SCRIPT} collectstatic --link --noinput > /dev/null
 
