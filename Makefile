@@ -93,8 +93,8 @@ sass-twitter-bootstrap:
 
 backbone-common:
 	@echo 'Setting up Backbone-common...'
-	@rm -rf ${COFFEE_DIR}/common
-	@cp -r ./modules/backbone-common ${COFFEE_DIR}/common
+	@rm -rf ${COFFEE_DIR}/common ${COFFEE_DIR}/common.coffee
+	@cp -r ./modules/backbone-common/src/ ${COFFEE_DIR}
 
 requirejs:
 	@echo 'Setting up RequireJS...'
