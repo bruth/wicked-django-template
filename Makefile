@@ -1,5 +1,6 @@
 WATCH_FILE = .watch-pid
 MANAGE_SCRIPT = ./bin/manage.py
+SITE_DIR = ./_site
 STATIC_DIR = ./src/static
 COFFEE_DIR = ${STATIC_DIR}/scripts/coffeescript
 JAVASCRIPT_DIR = ${STATIC_DIR}/scripts/javascript
@@ -30,7 +31,7 @@ dist: build
 
 collect: build
 	@echo 'Symlinking static files...'
-	@rm -rf ./_site/static
+	@rm -rf ${SITE_DIR}/static
 	@${MANAGE_SCRIPT} collectstatic --link --noinput > /dev/null
 
 sass:
@@ -64,10 +65,11 @@ init-submodules:
 		fi; \
 	fi;
 
-build-submodules: init-submodules bourbon r.js
+build-submodules: init-submodules bourbon r.js jquery backbone underscore \
+	requirejs backbone-common sass-twitter-bootstrap html5-boilerplate
 
 bourbon:
-	@echo 'Setting up submodule coriander...'
+	@echo 'Setting up bourbon...'
 	@cd ./modules/bourbon && rake generate
 	@rm -rf ${SASS_DIR}/bourbon
 	@cp -r ./modules/bourbon/lib/bourbon ${SASS_DIR}/bourbon
@@ -77,6 +79,38 @@ r.js:
 	@cd ./modules/r.js && node dist.js
 	@mkdir -p ./bin
 	@cp ./modules/r.js/r.js ./bin
+
+html5-boilerplate:
+	@echo 'Setting up HTML5 boilerplate...'
+	@cp -r ./modules/html5-boilerplate/*.{png,xml,ico,txt,htaccess} ${SITE_DIR}
+
+sass-twitter-bootstrap:
+	@echo 'Setting up Sass Twitter Bootstrap...'
+	@rm -rf ${SASS_DIR}/bootstrap
+	@cp -r ./modules/sass-twitter-bootstrap/lib ${SASS_DIR}/bootstrap
+
+backbone-common:
+	@echo 'Setting up Backbone-common...'
+	@rm -rf ${COFFEE_DIR}/common
+	@cp -r ./modules/backbone-common ${COFFEE_DIR}/common
+
+requirejs:
+	@echo 'Setting up RequireJS...'
+	@cp ./modules/requirejs/require.js ${JAVASCRIPT_SRC_DIR}/vendor/require.js
+	@cp ./modules/requirejs/order.js ${JAVASCRIPT_SRC_DIR}/order.js
+
+jquery:
+	@echo 'Setting up jQuery...'
+	@cd ./modules/jquery && make
+	@cp ./modules/jquery/dist/jquery.js ${JAVASCRIPT_SRC_DIR}/vendor/jquery.js
+
+backbone:
+	@echo 'Setting up Backbone...'
+	@cp ./modules/backbone/backbone.js ${JAVASCRIPT_SRC_DIR}/vendor/backbone.js
+
+underscore:
+	@echo 'Setting up Underscore...'
+	@cp ./modules/underscore/underscore.js ${JAVASCRIPT_SRC_DIR}/vendor/underscore.js
 
 optimize: rjs clean
 	@echo 'Optimizing JavaScript...'

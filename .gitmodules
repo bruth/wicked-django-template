@@ -19,3 +19,9 @@
 [submodule "modules/backbone"]
 	path = modules/backbone
 	url = git://github.com/documentcloud/backbone.git
+[submodule "modules/html5-boilerplate"]
+	path = modules/html5-boilerplate
+	url = git://github.com/h5bp/html5-boilerplate.git
+[submodule "modules/backbone-common"]
+	path = modules/backbone-common
+	url = git://github.com/bruth/backbone-common.git
