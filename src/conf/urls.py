@@ -2,7 +2,6 @@ import re
 from django.conf.urls.defaults import url, patterns, include
 from django.conf import settings
 from django.contrib import admin
-from django.template.loader import add_to_builtins
 
 admin.autodiscover()
 
