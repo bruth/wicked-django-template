@@ -1,0 +1,21 @@
+[submodule "modules/bourbon"]
+	path = modules/bourbon
+	url = git://github.com/thoughtbot/bourbon.git
+[submodule "modules/r.js"]
+	path = modules/r.js
+	url = git://github.com/jrburke/r.js.git
+[submodule "modules/jquery"]
+	path = modules/jquery
+	url = git://github.com/jquery/jquery.git
+[submodule "modules/underscore"]
+	path = modules/underscore
+	url = git://github.com/documentcloud/underscore.git
+[submodule "modules/requirejs"]
+	path = modules/requirejs
+	url = git://github.com/jrburke/requirejs.git
+[submodule "modules/sass-twitter-bootstrap"]
+	path = modules/sass-twitter-bootstrap
+	url = git://github.com/jlong/sass-twitter-bootstrap.git
+[submodule "modules/backbone"]
+	path = modules/backbone
+	url = git://github.com/documentcloud/backbone.git

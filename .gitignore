@@ -1,0 +1,30 @@
+.DS_Store
+
+*.py[co]
+dist
+sdist
+build
+pip-log.txt
+MANIFEST
+
+.sass-cache
+
+# ignore local settings file intended for environment-specific settings
+local_settings.py
+
+# ignore optimized javascripts
+static/scripts/javascript/min
+
+# ignore submodule derived files
+bin/r.js
+static/stylesheets/scss/coriander
+
+# all CoffeeScript files will be compiled into this directory prior
+# to being optimized
+static/scripts/javascript/src
+
+# all Sass files will be compiled into this directory
+static/stylesheets/css
+
+# ignore collected static files
+_static

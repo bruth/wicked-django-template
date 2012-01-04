@@ -1,0 +1,15 @@
+include requirements.pip
+include wsgi.py
+include bin/manage.py
+
+exclude _site/static/scripts/javascript/app.build.js
+exclude _site/static/scripts/javascript/min/build.txt
+exclude src/conf/local_settings.py
+
+global-exclude .DS_Store
+
+prune _site/static/scripts/coffeescript
+prune _site/static/stylesheets/scss
+
+graft _site
+graft server

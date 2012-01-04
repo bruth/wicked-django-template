@@ -1,0 +1,22 @@
+# This file collects all required third-party applications that are needed
+# to run this project. Later you can install all these apps in a row
+# using pip. Example::
+#
+#     pip install -U -r requirements.pip
+
+# Core requirements
+django
+markdown
+south
+django-grappelli
+
+# Database Drivers, the Python stdlib has support for SQLite
+# psycopg2
+# cx_oracle
+# mysql-python
+
+# Site-wide authentication
+# django-siteauth
+
+# Application registration and moderation
+# django-registration2
