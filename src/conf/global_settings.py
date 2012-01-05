@@ -5,7 +5,7 @@ from django.conf.global_settings import *
 
 # Import the project module to calculate directories relative to the module
 # location.
-PROJECT_PATH = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+PROJECT_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..')
 
 # List all Django apps here. Note that standard Python libraries should not
 # be added to this list since Django will not recognize them as apps anyway.
