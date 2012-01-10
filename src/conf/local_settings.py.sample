@@ -1,4 +1,5 @@
 import os
+from global_settings import PROJECT_PATH, LOGGERS
 
 # Uncomment to put the application in non-debug mode. This is useful
 # for testing error handling and messages.
@@ -26,3 +27,27 @@ SECRET_KEY = ''
 
 # Set to 1 during development to ignore page-level caching
 CACHE_MIDDLEWARE_SECONDS = 1
+
+# Uncomment for additional logging. If using the 'rotating_file' handler
+# you must create the `logs` directory in the project root.
+# LOGGERS['handlers'].update({
+#     'stdout': {
+#         'class': 'logging.StreamHandler',
+#         'level': 'DEBUG',
+#     },
+#     'rotating_file': {
+#         'class': 'logging.handlers.RotatingFileHandler',
+#         'level': 'DEBUG',
+#         'filename': os.path.join(PROJECT_PATH, 'logs/debug.log')
+#         'maxBytes': 2048,
+#         'backupCount': 5,
+#     },
+# })
+# 
+# LOGGERS['loggers'].update({
+#     'django.db.backends': {
+#         'handlers': ['rotating_file'],
+#         'propagate': True,
+#         'level': 'DEBUG',
+#     }
+# })
