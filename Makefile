@@ -11,10 +11,10 @@ SASS_DIR = ${STATIC_DIR}/stylesheets/scss
 CSS_DIR = ${STATIC_DIR}/stylesheets/css
 
 COMPILE_SASS = `which sass` \
-			   --scss \
-			   --style=compressed \
-			   -r ${SASS_DIR}/bourbon/lib/bourbon.rb \
-			   ${SASS_DIR}:${CSS_DIR}
+	--scss \
+	--style=compressed \
+	-r ${SASS_DIR}/bourbon/lib/bourbon.rb \
+	${SASS_DIR}:${CSS_DIR}
 
 COMPILE_COFFEE = `which coffee` -b -o ${JAVASCRIPT_SRC_DIR} -c ${COFFEE_DIR}
 WATCH_COFFEE = `which coffee` -w -b -o ${JAVASCRIPT_SRC_DIR} -c ${COFFEE_DIR}
@@ -22,6 +22,8 @@ WATCH_COFFEE = `which coffee` -w -b -o ${JAVASCRIPT_SRC_DIR} -c ${COFFEE_DIR}
 REQUIRE_OPTIMIZE = `which node` ./bin/r.js -o ${JAVASCRIPT_DIR}/app.build.js
 
 all: collect
+
+setup: init-submodules build-submodules
 
 build: build-submodules sass coffee optimize
 
@@ -57,18 +59,24 @@ unwatch:
 init-submodules:
 	@echo 'Initializing submodules...'
 	@if [ -d .git ]; then \
-		if git submodule status | grep -q -E '^-'; then \
-			git submodule update --init --recursive; \
-		else \
-			git submodule update --init --recursive --merge; \
-		fi; \
+		git submodule update --init --recursive; \
 	fi;
 
 # note: html5-boilerplate is not included here since it may overwrite
 # custom settings
-build-submodules: init-submodules bourbon r.js jquery backbone underscore \
-	requirejs backbone-common sass-twitter-bootstrap
+build-submodules: clean-submodules bourbon r.js jquery backbone underscore \
+	requirejs backbone-common bourbon sass-twitter-bootstrap
 
+# Removes all code copied from submodule repos
+clean-submodules:
+	@rm -rf bin/r.js \
+		src/static/stylesheets/scss/{bourbon,bootstrap} \
+		src/static/scripts/coffeescript/common \
+		src/static/scripts/coffeescript/common.coffee \
+		src/static/scripts/javascript/src/{order,require,jquery,underscore,backbone}.js
+
+# WARNING: this should be run only once since this could overwrite existing
+# customized files
 html5-boilerplate:
 	@echo 'Setting up HTML5 boilerplate...'
 	@cp -r ./modules/html5-boilerplate/*.{png,xml,ico,txt} \
@@ -94,7 +102,7 @@ sass-twitter-bootstrap:
 backbone-common:
 	@echo 'Setting up Backbone-common...'
 	@rm -rf ${COFFEE_DIR}/common ${COFFEE_DIR}/common.coffee
-	@cp -r ./modules/backbone-common/src/ ${COFFEE_DIR}
+	@cp -r ./modules/backbone-common/src/* ${COFFEE_DIR}
 
 requirejs:
 	@echo 'Setting up RequireJS...'
@@ -114,18 +122,11 @@ underscore:
 	@echo 'Setting up Underscore...'
 	@cp ./modules/underscore/underscore.js ${JAVASCRIPT_SRC_DIR}/underscore.js
 
-optimize: rjs clean
+optimize: r.js
 	@echo 'Optimizing JavaScript...'
+	@rm -rf ${JAVASCRIPT_MIN_DIR}
 	@mkdir -p ${JAVASCRIPT_MIN_DIR}
 	@${REQUIRE_OPTIMIZE} > /dev/null
-
-clean:
-	@rm -rf ${JAVASCRIPT_MIN_DIR} \
-		${CSS_DIR} \
-		bin/r.js \
-		src/static/stylesheets/scss/{bourbon,bootstrap} \
-		src/static/scripts/coffeescript/common \
-		src/static/scripts/javascript/src/{order,require,r,jquery,underscore,backbone}.js
 
 secret-key:
 	@echo Generating unique secret key...
@@ -133,4 +134,4 @@ secret-key:
 	@echo
 	@echo 'SECRET_KEY = \c'; python ./bin/secret_key.py
 
-.PHONY: all sass coffee watch unwatch build dist optimize clean
+.PHONY: all sass coffee watch unwatch build dist optimize
