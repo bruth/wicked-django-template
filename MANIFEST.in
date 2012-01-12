@@ -1,6 +1,7 @@
 include requirements.pip
 include wsgi.py
 include bin/manage.py
+include src/conf/local_settings.py.sample
 
 exclude _site/static/scripts/javascript/app.build.js
 exclude _site/static/scripts/javascript/min/build.txt
