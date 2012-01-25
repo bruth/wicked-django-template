@@ -1,16 +1,16 @@
+global-exclude .DS_Store
+
 include requirements.pip
 include wsgi.py
 include bin/manage.py
 include src/conf/local_settings.py.sample
+include Makefile
 
-exclude _site/static/scripts/javascript/app.build.js
-exclude _site/static/scripts/javascript/min/build.txt
+exclude src/static/scripts/javascript/app.build.js
+exclude src/static/scripts/javascript/min/build.txt
 exclude src/conf/local_settings.py
 
-global-exclude .DS_Store
-
-prune _site/static/scripts/coffeescript
-prune _site/static/stylesheets/scss
+prune _site/static
 prune src/static/scripts/coffeescript
 prune src/static/stylesheets/scss
 
