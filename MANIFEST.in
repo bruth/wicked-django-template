@@ -11,6 +11,8 @@ global-exclude .DS_Store
 
 prune _site/static/scripts/coffeescript
 prune _site/static/stylesheets/scss
+prune src/static/scripts/coffeescript
+prune src/static/stylesheets/scss
 
 graft _site
 graft server
