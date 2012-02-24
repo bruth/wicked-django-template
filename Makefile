@@ -64,16 +64,20 @@ init-submodules:
 
 # note: html5-boilerplate is not included here since it may overwrite
 # custom settings
-build-submodules: clean-submodules bourbon r.js jquery backbone underscore \
+build-deps: clean-submodules bourbon r.js jquery backbone underscore \
 	requirejs backbone-common bourbon sass-twitter-bootstrap
 
 # Removes all code copied from submodule repos
-clean-submodules:
+clean-deps:
 	@rm -rf bin/r.js \
 		src/static/stylesheets/scss/{bourbon,bootstrap} \
 		src/static/scripts/coffeescript/common \
 		src/static/scripts/coffeescript/common.coffee \
 		src/static/scripts/javascript/src/{order,require,jquery,underscore,backbone}.js
+
+# Backward compatible aliases
+build-submodules: build-deps
+clean-submodules: clean-deps
 
 # WARNING: this should be run only once since this could overwrite existing
 # customized files
@@ -84,9 +88,8 @@ html5-boilerplate:
 
 bourbon:
 	@echo 'Setting up bourbon...'
-	@cd ./modules/bourbon && rake generate
 	@rm -rf ${SASS_DIR}/bourbon
-	@cp -r ./modules/bourbon/bourbon ${SASS_DIR}/bourbon
+	@cd ${SASS_DIR} && bourbon install
 
 r.js:
 	@echo 'Setting up r.js...'
