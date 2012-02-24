@@ -23,9 +23,9 @@ REQUIRE_OPTIMIZE = `which node` ./bin/r.js -o ${JAVASCRIPT_DIR}/app.build.js
 
 all: collect
 
-setup: init-submodules build-submodules
+setup: init-submodules build-deps
 
-build: build-submodules sass coffee optimize
+build: build-deps sass coffee optimize
 
 dist: build
 	@echo 'Creating a source distributions...'
@@ -64,7 +64,7 @@ init-submodules:
 
 # note: html5-boilerplate is not included here since it may overwrite
 # custom settings
-build-deps: clean-submodules bourbon r.js jquery backbone underscore \
+build-deps: clean-deps bourbon r.js jquery backbone underscore \
 	requirejs backbone-common bourbon sass-twitter-bootstrap
 
 # Removes all code copied from submodule repos
