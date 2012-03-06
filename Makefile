@@ -64,13 +64,13 @@ init-submodules:
 
 # note: html5-boilerplate is not included here since it may overwrite
 # custom settings
-build-deps: clean-deps bourbon r.js jquery backbone underscore \
-	requirejs backbone-common bourbon sass-twitter-bootstrap
+build-deps: clean-deps r.js jquery backbone underscore \
+	requirejs backbone-common sass-twitter-bootstrap
 
 # Removes all code copied from submodule repos
 clean-deps:
 	@rm -rf bin/r.js \
-		src/static/stylesheets/scss/{bourbon,bootstrap} \
+		src/static/stylesheets/scss/bootstrap \
 		src/static/scripts/coffeescript/common \
 		src/static/scripts/coffeescript/common.coffee \
 		src/static/scripts/javascript/src/{order,require,jquery,underscore,backbone}.js
@@ -85,11 +85,6 @@ html5-boilerplate:
 	@echo 'Setting up HTML5 boilerplate...'
 	@cp -r ./modules/html5-boilerplate/*.{png,xml,ico,txt} \
 		./modules/html5-boilerplate/.htaccess ${SITE_DIR}
-
-bourbon:
-	@echo 'Setting up bourbon...'
-	@rm -rf ${SASS_DIR}/bourbon
-	@cd ${SASS_DIR} && bourbon install
 
 r.js:
 	@echo 'Setting up r.js...'

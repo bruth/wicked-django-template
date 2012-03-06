@@ -21,7 +21,6 @@ src/static/scripts/javascript/min
 # files copied into _site should not be ignored since those files are intended
 # to be changed to fit the site's requirements
 bin/r.js
-src/static/stylesheets/scss/bourbon
 src/static/stylesheets/scss/bootstrap
 src/static/scripts/coffeescript/common
 src/static/scripts/coffeescript/common.coffee
