@@ -65,12 +65,11 @@ init-submodules:
 # note: html5-boilerplate is not included here since it may overwrite
 # custom settings
 build-deps: clean-deps r.js jquery backbone underscore \
-	requirejs backbone-common sass-twitter-bootstrap
+	requirejs backbone-common
 
 # Removes all code copied from submodule repos
 clean-deps:
 	@rm -rf bin/r.js \
-		src/static/stylesheets/scss/bootstrap \
 		src/static/scripts/coffeescript/common \
 		src/static/scripts/coffeescript/common.coffee \
 		src/static/scripts/javascript/src/{order,require,jquery,underscore,backbone}.js
@@ -91,11 +90,6 @@ r.js:
 	@cd ./modules/r.js && node dist.js
 	@mkdir -p ./bin
 	@cp ./modules/r.js/r.js ./bin
-
-sass-twitter-bootstrap:
-	@echo 'Setting up Sass Twitter Bootstrap...'
-	@rm -rf ${SASS_DIR}/bootstrap
-	@cp -r ./modules/sass-twitter-bootstrap/lib ${SASS_DIR}/bootstrap
 
 backbone-common:
 	@echo 'Setting up Backbone-common...'

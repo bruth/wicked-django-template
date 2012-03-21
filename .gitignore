@@ -21,7 +21,6 @@ src/static/scripts/javascript/min
 # files copied into _site should not be ignored since those files are intended
 # to be changed to fit the site's requirements
 bin/r.js
-src/static/stylesheets/scss/bootstrap
 src/static/scripts/coffeescript/common
 src/static/scripts/coffeescript/common.coffee
 src/static/scripts/javascript/src/order.js
@@ -37,7 +36,10 @@ src/static/scripts/javascript/src/common
 src/static/scripts/javascript/src/common.js
 
 # all Sass files will be compiled into this directory
-src/static/stylesheets/css
+src/static/stylesheets/css/*.css
+!src/static/stylesheets/img
+!src/static/stylesheets/css/bootstrap*
+!src/static/stylesheets/css/prettify.css
 
 # Collected static files via Django's staticfiles app
 _site/static

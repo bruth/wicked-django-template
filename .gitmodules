@@ -7,9 +7,6 @@
 [submodule "modules/requirejs"]
 	path = modules/requirejs
 	url = git://github.com/jrburke/requirejs.git
-[submodule "modules/sass-twitter-bootstrap"]
-	path = modules/sass-twitter-bootstrap
-	url = git://github.com/jlong/sass-twitter-bootstrap.git
 [submodule "modules/html5-boilerplate"]
 	path = modules/html5-boilerplate
 	url = git://github.com/h5bp/html5-boilerplate.git
