@@ -24,6 +24,11 @@ REQUIRE_OPTIMIZE = `which node` ./bin/r.js -o ${JAVASCRIPT_DIR}/app.build.js
 all: collect
 
 setup: init-submodules build-deps
+	@if [ ! -f ./src/conf/local_settings.py ] && [ -f ./src/conf/local_settings.py.sample ]; then \
+	    echo 'Creating local_settings.py...'; \
+	    cp ./src/conf/local_settings.py.sample ./src/conf/local_settings.py; \
+	fi;
+
 
 build: build-deps sass coffee optimize
 
