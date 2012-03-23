@@ -23,14 +23,14 @@ REQUIRE_OPTIMIZE = `which node` ./bin/r.js -o ${JAVASCRIPT_DIR}/app.build.js
 
 all: collect
 
-setup: init-submodules build-deps
+setup:
 	@if [ ! -f ./src/conf/local_settings.py ] && [ -f ./src/conf/local_settings.py.sample ]; then \
 	    echo 'Creating local_settings.py...'; \
 	    cp ./src/conf/local_settings.py.sample ./src/conf/local_settings.py; \
 	fi;
 
 
-build: build-deps sass coffee optimize
+build: sass coffee optimize
 
 dist: build
 	@echo 'Creating a source distributions...'
@@ -69,19 +69,8 @@ init-submodules:
 
 # note: html5-boilerplate is not included here since it may overwrite
 # custom settings
-build-deps: clean-deps r.js jquery backbone underscore \
+build-deps: r.js jquery backbone underscore \
 	requirejs backbone-common
-
-# Removes all code copied from submodule repos
-clean-deps:
-	@rm -rf bin/r.js \
-		src/static/scripts/coffeescript/common \
-		src/static/scripts/coffeescript/common.coffee \
-		src/static/scripts/javascript/src/{order,require,jquery,underscore,backbone}.js
-
-# Backward compatible aliases
-build-submodules: build-deps
-clean-submodules: clean-deps
 
 # WARNING: this should be run only once since this could overwrite existing
 # customized files
@@ -119,7 +108,7 @@ underscore:
 	@echo 'Setting up Underscore...'
 	@cp ./modules/underscore/underscore.js ${JAVASCRIPT_SRC_DIR}/underscore.js
 
-optimize: r.js
+optimize:
 	@echo 'Optimizing JavaScript...'
 	@rm -rf ${JAVASCRIPT_MIN_DIR}
 	@mkdir -p ${JAVASCRIPT_MIN_DIR}
