@@ -17,7 +17,6 @@ INSTALLED_APPS = (
     'core',
 
     # third-party apps
-    'grappelli',
     # 'siteauth',
     # 'south',
     
@@ -114,7 +113,7 @@ STATIC_URL = '/static/'
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
-ADMIN_MEDIA_PREFIX = '/static/grappelli/'
+ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (

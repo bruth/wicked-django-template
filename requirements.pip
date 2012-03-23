@@ -8,7 +8,6 @@
 django
 markdown
 south
-django-grappelli
 
 # Database Drivers, the Python stdlib has support for SQLite
 # psycopg2
