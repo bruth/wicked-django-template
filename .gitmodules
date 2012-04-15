@@ -19,3 +19,6 @@
 [submodule "modules/underscore"]
 	path = modules/underscore
 	url = git://github.com/amdjs/underscore.git
+[submodule "modules/use.js"]
+	path = modules/use.js
+	url = git://github.com/tbranyen/use.js.git

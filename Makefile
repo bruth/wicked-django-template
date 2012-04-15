@@ -67,17 +67,8 @@ init-submodules:
 		git submodule update --init --recursive; \
 	fi;
 
-# note: html5-boilerplate is not included here since it may overwrite
-# custom settings
 build-deps: r.js jquery backbone underscore \
-	requirejs backbone-common
-
-# WARNING: this should be run only once since this could overwrite existing
-# customized files
-html5-boilerplate:
-	@echo 'Setting up HTML5 boilerplate...'
-	@cp -r ./modules/html5-boilerplate/*.{png,xml,ico,txt} \
-		./modules/html5-boilerplate/.htaccess ${SITE_DIR}
+	requirejs backbone-common use.js
 
 r.js:
 	@echo 'Setting up r.js...'
@@ -92,21 +83,24 @@ backbone-common:
 
 requirejs:
 	@echo 'Setting up RequireJS...'
-	@cp ./modules/requirejs/require.js ${JAVASCRIPT_SRC_DIR}/require.js
-	@cp ./modules/requirejs/order.js ${JAVASCRIPT_SRC_DIR}/order.js
+	@cp ./modules/requirejs/{require,order,text}.js ${JAVASCRIPT_SRC_DIR}
 
 jquery:
 	@echo 'Setting up jQuery...'
 	@cd ./modules/jquery && make update_submodules jquery
-	@cp ./modules/jquery/dist/jquery.js ${JAVASCRIPT_SRC_DIR}/jquery.js
+	@cp ./modules/jquery/dist/jquery.js ${JAVASCRIPT_SRC_DIR}
 
 backbone:
 	@echo 'Setting up Backbone...'
-	@cp ./modules/backbone/backbone.js ${JAVASCRIPT_SRC_DIR}/backbone.js
+	@cp ./modules/backbone/backbone.js ${JAVASCRIPT_SRC_DIR}
 
 underscore:
 	@echo 'Setting up Underscore...'
-	@cp ./modules/underscore/underscore.js ${JAVASCRIPT_SRC_DIR}/underscore.js
+	@cp ./modules/underscore/underscore.js ${JAVASCRIPT_SRC_DIR}
+
+use.js:
+	@echo 'Setting up use.js...'
+	@cp ./modules/use.js/use.js ${JAVASCRIPT_SRC_DIR}
 
 optimize:
 	@echo 'Optimizing JavaScript...'
