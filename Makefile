@@ -21,7 +21,7 @@ WATCH_COFFEE = `which coffee` -w -b -o ${JAVASCRIPT_SRC_DIR} -c ${COFFEE_DIR}
 
 REQUIRE_OPTIMIZE = `which node` ./bin/r.js -o ${JAVASCRIPT_DIR}/app.build.js
 
-all: collect
+all: build collect
 
 setup:
 	@if [ ! -f ./src/conf/local_settings.py ] && [ -f ./src/conf/local_settings.py.sample ]; then \
@@ -29,12 +29,7 @@ setup:
 	    cp ./src/conf/local_settings.py.sample ./src/conf/local_settings.py; \
 	fi;
 
-
 build: sass coffee optimize
-
-dist: build
-	@echo 'Creating a source distributions...'
-	@python setup.py sdist > /dev/null
 
 collect:
 	@echo 'Symlinking static files...'
@@ -61,52 +56,13 @@ unwatch:
 		rm ${WATCH_FILE}; \
 	fi;
 
-init-submodules:
-	@echo 'Initializing submodules...'
-	@if [ -d .git ]; then \
-		git submodule update --init --recursive; \
-	fi;
-
-build-deps: r.js jquery backbone underscore \
-	requirejs backbone-common use.js
-
-r.js:
-	@echo 'Setting up r.js...'
-	@cd ./modules/r.js && node dist.js
-	@mkdir -p ./bin
-	@cp ./modules/r.js/r.js ./bin
-
-backbone-common:
-	@echo 'Setting up Backbone-common...'
-	@rm -rf ${COFFEE_DIR}/common ${COFFEE_DIR}/common.coffee
-	@cp -r ./modules/backbone-common/src/* ${COFFEE_DIR}
-
-requirejs:
-	@echo 'Setting up RequireJS...'
-	@cp ./modules/requirejs/{require,order,text}.js ${JAVASCRIPT_SRC_DIR}
-
-jquery:
-	@echo 'Setting up jQuery...'
-	@cd ./modules/jquery && make update_submodules jquery
-	@cp ./modules/jquery/dist/jquery.js ${JAVASCRIPT_SRC_DIR}
-
-backbone:
-	@echo 'Setting up Backbone...'
-	@cp ./modules/backbone/backbone.js ${JAVASCRIPT_SRC_DIR}
-
-underscore:
-	@echo 'Setting up Underscore...'
-	@cp ./modules/underscore/underscore.js ${JAVASCRIPT_SRC_DIR}
-
-use.js:
-	@echo 'Setting up use.js...'
-	@cp ./modules/use.js/use.js ${JAVASCRIPT_SRC_DIR}
-
-optimize:
+optimize: clean
 	@echo 'Optimizing JavaScript...'
-	@rm -rf ${JAVASCRIPT_MIN_DIR}
 	@mkdir -p ${JAVASCRIPT_MIN_DIR}
 	@${REQUIRE_OPTIMIZE} > /dev/null
+
+clean:
+	@rm -rf ${JAVASCRIPT_MIN_DIR}
 
 secret-key:
 	@echo Generating unique secret key...
@@ -114,4 +70,4 @@ secret-key:
 	@echo
 	@echo 'SECRET_KEY = \c'; python ./bin/secret_key.py
 
-.PHONY: all sass coffee watch unwatch build dist optimize
+.PHONY: all build sass coffee watch unwatch optimize

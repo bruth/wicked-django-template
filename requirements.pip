@@ -19,3 +19,6 @@ south
 
 # Application registration and moderation
 # django-registration2
+
+# APIs for creating Hypermedia resources
+# django-restlib2

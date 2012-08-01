@@ -33,7 +33,7 @@ Bada$$ Django Template
 
 Dependencies
 ------------
-- Python 2.7 (because that's how we roll)
+- Python 2.7 (because that's how I roll)
 
 Fabfile Commands
 ----------------

@@ -1,6 +1,9 @@
+# Standard fair
 .DS_Store
 
-*.py[co]
+*~
+*.py?
+*.sw?
 dist
 sdist
 build
@@ -10,18 +13,13 @@ MANIFEST
 .watch-pid
 .sass-cache
 
-# ignore local settings file intended for environment-specific settings
+# Ignore local settings file intended for environment-specific settings
 local_settings.py
 
-# ignore optimized javascripts
+# Ignore optimized javascripts
 src/static/scripts/javascript/min
 
-# all CoffeeScript files will be compiled into this directory prior
-# to being optimized
-src/static/scripts/javascript/src/common
-src/static/scripts/javascript/src/common.js
-
-# all Sass files will be compiled into this directory
+# All Sass files will be compiled into this directory
 src/static/stylesheets/css/*.css
 !src/static/stylesheets/img
 !src/static/stylesheets/css/bootstrap*

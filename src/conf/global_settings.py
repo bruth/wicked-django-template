@@ -18,8 +18,8 @@ INSTALLED_APPS = (
 
     # third-party apps
     # 'siteauth',
-    # 'south',
-    
+    'south',
+
     # built-in Django apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,7 +55,12 @@ TEMPLATE_DEBUG = DEBUG
 # file that is not versioned. Use ``local_settings.py``.
 #
 
-DATABASES = {}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(PROJECT_PATH, 'app.db')
+    }
+}
 
 
 #
@@ -132,7 +137,7 @@ STATICFILES_DIRS = (
 
 # Project level templates and template directories that override
 # third-party app templates.
-TEMPLATE_DIRS = (    
+TEMPLATE_DIRS = (
     # This project's templates directory
     os.path.join(PROJECT_PATH, 'src/templates'),
 )
@@ -264,7 +269,10 @@ SESSION_SAVE_EVERY_REQUEST = False
 
 USE_ETAGS = True
 SEND_BROKEN_LINK_EMAILS = False
-IGNORABLE_404_ENDS += ('robots.txt', 'favicon.ico')
+IGNORABLE_404_PATHS = (
+    r'robots.txt$',
+    r'favicon.ico$',
+)
 
 # django-registration2
 # REGISTRATION_ACTIVATION_DAYS = 0

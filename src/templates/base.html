@@ -24,30 +24,20 @@
     <link rel=stylesheet href={{ CSS_URL }}bootstrap.css>
     
     <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
-
-    <!-- All JavaScript at the bottom, except this Modernizr build incl. Respond.js
-        Respond is a polyfill for min/max-width media queries. Modernizr enables HTML5 elements & feature detects; 
-        for optimal performance, create your own custom Modernizr build: www.modernizr.com/download/ -->
 </head>
 
 <body>
     <header>
-
+        {% block header %}{% endblock %}
     </header>
 
-    <div id=content>
-
-    </div>
+    {% block content %}{% endblock %}
 
     <footer>
-
+        {% block footer %}{% endblock %}
     </footer>
 
     <!-- JavaScript at the bottom for fast page loading -->
-
-    <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-    <!-- <script src=//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js></script>
-    <script>window.jQuery || document.write('<script src=js/libs/jquery-1.7.1.min.js><\/script>')</script> -->
 
     <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
         mathiasbynens.be/notes/async-analytics-snippet -->
@@ -64,6 +54,32 @@
         <script defer src=//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js></script>
         <script defer>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
     <![endif]-->
+
+    <script>
+        var
+            // Used for non-safe requests
+            CSRF_TOKEN = '{{ csrf_token }}',
+
+            // Can be used for prefixing URLs defined in JavaScript files
+            SCRIPT_NAME = '{{ request.META.SCRIPT_NAME }}',
+
+            // RequireJS configuration
+            require = {
+                shim: {
+                    underscore: {
+                        exports: '_'
+                    },
+                    backbone: {
+                        deps: ['underscore', 'jquery'],
+                        exports: 'Backbone'
+                    },
+                    bootstrap: ['jquery']
+                }
+            };
+    </script>
+
+    <!-- Uncomment the below script tag to load RequireJS and load main.js -->
+    <!-- <script data-main=main src={{ JAVASCRIPT_URL }}/require.js></script> -->
 
 </body>
 </html>

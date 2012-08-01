@@ -12,7 +12,7 @@ from global_settings import PROJECT_PATH, LOGGING
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(os.path.dirname(__file__), '../../app.db')
+        'NAME': os.path.join(PROJECT_PATH, 'app.db')
     }
 }
 
