@@ -1,18 +1,12 @@
+import os
 from django.conf import settings
 
 def static(request):
-    """Provides a context variable that differentiates between the base
-    JavaScript URL when in debug mode vs. not.
-    """
-    CSS_URL = '{}stylesheets/css/'.format(settings.STATIC_URL)    
-    JAVASCRIPT_URL = '{}scripts/javascript/'.format(settings.STATIC_URL)
-
-    if settings.DEBUG:
-        JAVASCRIPT_URL += 'src/'
-    else:
-        JAVASCRIPT_URL += 'min/'
-
+    "Shorthand static URLs. In debug mode, the JavaScript is not minified."
+    static_url = settings.STATIC_URL
+    prefix = 'src' if settings.DEBUG else 'min'
     return {
-        'CSS_URL': CSS_URL,    
-        'JAVASCRIPT_URL': JAVASCRIPT_URL,
+        'CSS_URL': os.path.join(static_url, 'stylesheets/css'),
+        'IMAGES_URL': os.path.join(static_url, 'images'),
+        'JAVASCRIPT_URL': os.path.join(static_url, 'scripts/javascript', prefix),
     }
