@@ -16,14 +16,6 @@ define [
     App.Models = {}
     App.Views = {}
 
-    # Ajax states
-    LOADING = 'Loading'
-    SYNCING = 'Syncing'
-    SAVED = 'Saved'
-    OFFLINE = 'Offline'
-    ERROR = 'Error'
-    DONE = 'Done'
-
     # Gloabl attempts counter
     # TODO make this a property of the `Backbone.ajax` function
     ATTEMPTS = 0
@@ -60,38 +52,10 @@ define [
     absolutePath = (path) ->
         SCRIPT_NAME + path
 
-    # Setup the sync status text and the various global ajax
-    # handlers.
-    syncStatus = $('<div id=sync-status></div>').addClass('alert')
-
-    $(document)
-        .ajaxSend (event, xhr, settings) ->
-            syncStatus.removeClass 'alert-danger'
-
-            # For all same origin, non-safe requests add the X-CSRFToken header
-            if not safeMethod(settings.type) and sameOrigin(settings.url)
-                xhr.setRequestHeader 'X-CSRFToken', CSRF_TOKEN
-
-            type = (settings.type or 'get').toLowerCase()
-            if type is 'get'
-                syncStatus.text LOADING
-            else
-                syncStatus.text SYNCING
-
-        .ajaxStop ->
-            visible = syncStatus.is(':visible')
-            if ATTEMPTS is MAX_ATTEMPTS and not visible
-                syncStatus.fadeIn(200)
-            else
-                syncStatus.text(DONE)
-                if visible then syncStatus.fadeOut(200)
-
-        .ajaxError (event, xhr, settings, error) ->
-            if error is 'timeout'
-                syncStatus.text OFFLINE
-            else if xhr.status >= 500
-                syncStatus.text(ERROR).addClass 'alert-danger'
-
+    $.ajaxPrefilter (settings, origSettings, xhr) ->
+        # For all same origin, non-safe requests add the X-CSRFToken header
+        if not safeMethod(settings.type) and sameOrigin(settings.url)
+            xhr.setRequestHeader 'X-CSRFToken', CSRF_TOKEN
 
     # Handle a few common cases if the server if there are still pending
     # requests or if the max attempts have been made.
@@ -100,10 +64,8 @@ define [
             if ATTEMPTS is MAX_ATTEMPTS
                 return "Unfortunately, your data hasn't been saved. The server
                     or your Internet connection is acting up. Sorry!"
-            else
-                syncStatus.fadeIn(200)
-                return "Wow, you're quick! Your stuff is being saved.
-                    It will only take a moment."
+            return "Wow, you're quick! Your stuff is being saved.
+                It will only take a moment."
 
 
     # Extend Backbone classes
@@ -194,9 +156,5 @@ define [
             @pending = true
             @request options, promise
         return promise
-
-
-    $ ->
-        syncStatus.appendTo('body')
 
     { CSRF_TOKEN, SCRIPT_NAME, absolutePath }
