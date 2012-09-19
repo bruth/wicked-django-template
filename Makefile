@@ -46,8 +46,8 @@ coffee:
 
 watch: unwatch
 	@echo 'Watching in the background...'
-	@${WATCH_COFFEE} &> /dev/null & echo $$! > ${WATCH_FILE}
-	@${COMPILE_SASS} --watch &> /dev/null & echo $$! >> ${WATCH_FILE}
+	@${WATCH_COFFEE} > /dev/null 2>&1 & echo $$! > ${WATCH_FILE}
+	@${COMPILE_SASS} --watch > /dev/null 2>&1 & echo $$! >> ${WATCH_FILE}
 
 unwatch:
 	@if [ -f ${WATCH_FILE} ]; then \
