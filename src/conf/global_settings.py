@@ -182,13 +182,13 @@ ROOT_URLCONF = 'src.conf.urls'
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.gzip.GZipMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     # 'siteauth.middleware.SiteAuthenticationMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 
@@ -243,7 +243,7 @@ CACHES = {
     }
 }
 
-CACHE_MIDDLEWARE_SECONDS = 60 * 20 # 20 minutes
+CACHE_MIDDLEWARE_SECONDS = 0
 
 # This is not necessary to set if the above `KEY_PREFIX` value is set since
 # the `KEY_PREFIX` namespaces all cache set by this application
@@ -256,8 +256,8 @@ CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 CSRF_COOKIE_NAME = 'csrftoken'
 
+# SESSION_COOKIE_AGE = 60 * 20
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-SESSION_COOKIE_AGE = 60 * 20 # 20 minutes
 SESSION_COOKIE_NAME = 'sessionid'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_SAVE_EVERY_REQUEST = False
@@ -267,7 +267,7 @@ SESSION_SAVE_EVERY_REQUEST = False
 # OTHER PROJECT SETTINGS
 #
 
-USE_ETAGS = True
+# USE_ETAGS = True
 SEND_BROKEN_LINK_EMAILS = False
 IGNORABLE_404_PATHS = (
     r'robots.txt$',
