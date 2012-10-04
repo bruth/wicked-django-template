@@ -11,18 +11,7 @@ $ source bin/activate
 $ pip install django
 ```
 
-Now run the `startproject` command. Note, on OS X the extracted
-contents may be put into a sub-directory. If so explicity set the output
-directory explicity to `.` then rename the sub-directory to `myproject`.
-
-```bash
-$ django-admin.py startproject --template https://github.com/bruth/badass-django-template/zipball/master -e py,ini,gitignore,in,conf,md,sample -n Makefile myproject .
-$ mv bruth-badass-django-template-705b8f2 myproject
-$ cd myproject
-```
-
-On Linux, the behavior is correct so do not specify the target directory
-explicitly:
+Now run the `startproject` command:
 
 ```bash
 $ django-admin.py startproject --template https://github.com/bruth/badass-django-template/zipball/master -e py,ini,gitignore,in,conf,md,sample -n Makefile myproject
