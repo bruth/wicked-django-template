@@ -13,19 +13,16 @@ PROJECT_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..'
 # Read more about projects vs. apps here:
 # https://docs.djangoproject.com/en/1.3/intro/tutorial01/#creating-models
 INSTALLED_APPS = (
-    # project apps located in src/apps
-    'core',
+    '{{ project_name }}',
 
-    # third-party apps
-    # 'siteauth',
     'south',
 
-    # built-in Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.humanize',
     'django.contrib.markup',
+    'django.contrib.messages',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.staticfiles',
@@ -58,7 +55,7 @@ TEMPLATE_DEBUG = DEBUG
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(PROJECT_PATH, 'app.db')
+        'NAME': os.path.join(PROJECT_PATH, '{{ project_name }}.db')
     }
 }
 
@@ -86,7 +83,7 @@ USE_I18N = False
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale
-USE_L10N = True
+USE_L10N = False
 
 
 #
@@ -121,15 +118,10 @@ STATIC_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
-STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-
-    # This project's static files directory
-    os.path.join(PROJECT_PATH, 'src/static'),
-)
-
+# Put strings here, like "/home/html/static" or "C:/www/django/static".
+# Always use forward slashes, even on Windows.
+# Don't forget to use absolute paths, not relative paths.
+STATICFILES_DIRS = ()
 
 #
 # TEMPLATES
@@ -137,16 +129,13 @@ STATICFILES_DIRS = (
 
 # Project level templates and template directories that override
 # third-party app templates.
-TEMPLATE_DIRS = (
-    # This project's templates directory
-    os.path.join(PROJECT_PATH, 'src/templates'),
-)
+TEMPLATE_DIRS = ()
 
 # Context processors are simply functions that return a dict which augments the
 # template context.
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
-    'core.context_processors.static',
+    '{{ project_name }}.context_processors.static',
 )
 
 
@@ -160,7 +149,7 @@ TEMPLATE_CONTEXT_PROCESSORS += (
 # reflect this discrepancy.
 FORCE_SCRIPT_NAME = ''
 
-ROOT_URLCONF = 'src.conf.urls'
+ROOT_URLCONF = '{{ project_name }}.conf.urls'
 
 # LOGIN_URL = '/login/'
 # LOGOUT_URL = '/logout/'
@@ -187,7 +176,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    # 'siteauth.middleware.SiteAuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     # 'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
@@ -198,7 +187,8 @@ MIDDLEWARE_CLASSES = (
 
 SUPPORT_EMAIL = 'support@example.com'
 DEFAULT_FROM_EMAIL = 'support@example.com'
-EMAIL_SUBJECT_PREFIX = '[App] '
+EMAIL_SUBJECT_PREFIX = '[{{ project_name }}] '
+SEND_BROKEN_LINK_EMAILS = False
 
 
 #
@@ -238,7 +228,7 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'unique',
-        'KEY_PREFIX': '',
+        'KEY_PREFIX': '{{ project_name}}',
         'VERSION': 1,
     }
 }
@@ -247,18 +237,18 @@ CACHE_MIDDLEWARE_SECONDS = 0
 
 # This is not necessary to set if the above `KEY_PREFIX` value is set since
 # the `KEY_PREFIX` namespaces all cache set by this application
-CACHE_MIDDLEWARE_KEY_PREFIX = ''
+CACHE_MIDDLEWARE_KEY_PREFIX = '{{ project_name }}'
 
 
 #
 # SESSIONS AND COOKIES
 #
 
-CSRF_COOKIE_NAME = 'csrftoken'
+CSRF_COOKIE_NAME = '{{ project_name }}_csrftoken'
 
 # SESSION_COOKIE_AGE = 60 * 20
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-SESSION_COOKIE_NAME = 'sessionid'
+SESSION_COOKIE_NAME = '{{ project_name }}_sessionid'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_SAVE_EVERY_REQUEST = False
 
@@ -268,15 +258,10 @@ SESSION_SAVE_EVERY_REQUEST = False
 #
 
 # USE_ETAGS = True
-SEND_BROKEN_LINK_EMAILS = False
 IGNORABLE_404_PATHS = (
     r'robots.txt$',
     r'favicon.ico$',
 )
-
-# django-registration2
-# REGISTRATION_ACTIVATION_DAYS = 0
-# REGISTRATION_MODERATION = True
 
 #
 # VARIOUS APP SETTINGS

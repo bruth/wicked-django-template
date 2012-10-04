@@ -1,0 +1,1 @@
+define(["./models/polling","./models/state"],function(a,b){return{polling:a,state:b}})

@@ -1,7 +1,6 @@
-include requirements.pip
+include requirements.txt
 include wsgi.py
 include bin/manage.py
-include src/conf/local_settings.py.sample
 include Makefile
 
 graft _site
@@ -9,10 +8,11 @@ graft server
 
 global-exclude .DS_Store
 
-exclude src/static/scripts/javascript/app.build.js
-exclude src/static/scripts/javascript/min/build.txt
-exclude src/conf/local_settings.py
+exclude {{ project_name }}/static/scripts/javascript/app.build.js
+exclude {{ project_name }}/static/scripts/javascript/min/build.txt
+exclude {{ project_name }}/conf/local_settings.py
 
 prune _site/static
-prune src/static/scripts/coffeescript
-prune src/static/stylesheets/scss
+prune {{ project_name }}/static/scripts/coffeescript
+prune {{ project_name }}/static/stylesheets/scss
+prune tests

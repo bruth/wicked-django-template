@@ -1,15 +1,18 @@
 # Standard fair
 .DS_Store
-
 *~
 *.py?
 *.sw?
+*.egg-info
+*.egg
+*.sock
 dist
 sdist
 build
 pip-log.txt
 MANIFEST
 
+# Sass/Coffee
 .watch-pid
 .sass-cache
 
@@ -17,13 +20,13 @@ MANIFEST
 local_settings.py
 
 # Ignore optimized javascripts
-src/static/scripts/javascript/min
+{{ project_name }}/static/scripts/javascript/min
 
 # All Sass files will be compiled into this directory
-src/static/stylesheets/css/*.css
-!src/static/stylesheets/img
-!src/static/stylesheets/css/bootstrap*
-!src/static/stylesheets/css/prettify.css
+{{ project_name }}/static/stylesheets/css/*.css
+!{{ project_name }}/static/stylesheets/img
+!{{ project_name }}/static/stylesheets/css/bootstrap*
+!{{ project_name }}/static/stylesheets/css/prettify.css
 
 # Collected static files via Django's staticfiles app
 _site/static

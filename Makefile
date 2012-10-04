@@ -1,7 +1,7 @@
 WATCH_FILE = .watch-pid
 MANAGE_SCRIPT = ./bin/manage.py
 SITE_DIR = ./_site
-STATIC_DIR = ./src/static
+STATIC_DIR = ./{{ project_name }}/static
 COFFEE_DIR = ${STATIC_DIR}/scripts/coffeescript
 JAVASCRIPT_DIR = ${STATIC_DIR}/scripts/javascript
 JAVASCRIPT_SRC_DIR = ${JAVASCRIPT_DIR}/src
@@ -24,9 +24,9 @@ REQUIRE_OPTIMIZE = `which node` ./bin/r.js -o ${JAVASCRIPT_DIR}/app.build.js
 all: build collect
 
 setup:
-	@if [ ! -f ./src/conf/local_settings.py ] && [ -f ./src/conf/local_settings.py.sample ]; then \
+	@if [ ! -f ./{{ project_name }}/conf/local_settings.py ] && [ -f ./{{ project_name }}/conf/local_settings.py.sample ]; then \
 	    echo 'Creating local_settings.py...'; \
-	    cp ./src/conf/local_settings.py.sample ./src/conf/local_settings.py; \
+	    cp ./{{ project_name }}/conf/local_settings.py.sample ./{{ project_name }}/conf/local_settings.py; \
 	fi;
 
 build: sass coffee optimize
@@ -64,10 +64,5 @@ optimize: clean
 clean:
 	@rm -rf ${JAVASCRIPT_MIN_DIR}
 
-secret-key:
-	@echo Generating unique secret key...
-	@echo Copy and paste the below setting into your local_settings.py file:
-	@echo
-	@echo 'SECRET_KEY = \c'; python ./bin/secret_key.py
 
 .PHONY: all build sass coffee watch unwatch optimize

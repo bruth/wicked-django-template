@@ -1,0 +1,1 @@
+define(["./views/collection","./views/popover","./views/state"],function(a,b,c){return{collection:a,popover:b,state:c}})

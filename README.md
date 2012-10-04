@@ -1,7 +1,7 @@
 Bada$$ Django Template
 ======================
 - clean project structure
-    - separate ``src`` directory for Django code
+    - separate ``{{ project_name }}`` directory for Django code
     - ``_site`` directory for web server document root
         - copied static files and user uploaded media files
         - works well with nginx's ``try_files`` directive
