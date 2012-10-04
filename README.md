@@ -7,6 +7,7 @@ The preferred environment for the template is creating a virtual environment:
 ```bash
 $ virtualenv myproject-env
 $ cd myproject-env
+$ source bin/activate
 $ pip install django
 ```
 
@@ -23,6 +24,38 @@ as yours).
 
 ```bash
 $ mv bruth-badass-django-template-705b8f2 myproject
+$ cd myproject
+```
+
+Ensure Ruby and the Sass gem are installed:
+
+```bash
+$ gem install sass
+```
+
+Ensure Node, NPM and CoffeeScript are installed:
+
+```bash
+$ npm install coffee-script -g
+```
+
+Execute the following commands to begin watching the static files and
+collect the files (using Django's collectstatic command)
+
+```bash
+$ make watch collect
+```
+
+Then either start the built-in Django server:
+
+```bash
+$ ./bin/manage.py runserver
+```
+
+or run a `uwsgi` process:
+
+```bash
+$ uwsgi --ini server/uwsgi/local.ini --protocol http --socket 127.0.0.1:8000 --check-static _site
 ```
 
 ## Features
@@ -56,18 +89,16 @@ $ mv bruth-badass-django-template-705b8f2 myproject
     - ``{{ IMAGES_URL }}``
 - simple, but useful fabfile.py for common commands
 
-Dependencies
-------------
+## Dependencies
+
 - Python 2.7 (because that's how I roll)
+- Ruby
+- Node
+- Ruby Sass gem
+- Node CoffeeScript module
 
-Fabfile Commands
-----------------
-- ``mm_on`` - turns on maintenance mode
-- ``mm_off`` - turns off maintenance mode
-- ``deploy`` - deploy a specific Git tag on the host
+## Makefile Commands
 
-Makefile Commands
------------------
 - ``build`` - builds and initializes all submodules, compiles SCSS and
     CoffeeScript and optimizes JavaScript
 - ``watch`` - watches the CoffeeScript and SCSS files in the background
@@ -76,16 +107,23 @@ for changes and automatically recompiles the files
 - ``sass`` - one-time explicit recompilation of SCSS files
 - ``coffee`` - one-time explicit recompilation of CoffeeScript files
 
-Local Settings
---------------
+## Fabfile Commands
+
+- ``mm_on`` - turns on maintenance mode
+- ``mm_off`` - turns off maintenance mode
+- ``deploy`` - deploy a specific Git tag on the host
+
+
+## Local Settings
+
 ``local_settings.py`` is intentionally not versioned (via .gitignore). It should
 contain any environment-specific settings and/or sensitive settings such as
 passwords, the ``SECRET_KEY`` and other information that should not be in version
 control. Defining ``local_settings.py`` is not mandatory but will warn if it does
 not exist.
 
-CoffeeScript/JavaScript Development
------------------------------------
+## CoffeeScript/JavaScript Development
+
 CoffeeScript is lovely. The flow is simple:
 
 - write some CoffeeScript which automatically gets compiled in JavaScript
@@ -97,8 +135,8 @@ should be compiled to single files. It is recommended to take a tiered
 approach to reduce overall file size across pages and increase cache potential
 for libraries that won't change for a while, for example jQuery.
 
-SCSS Development
-----------------
+## SCSS Development
+
 [Sass](http://sass-lang.com/) is awesome. SCSS is a superset of CSS so you can
 use as much or as little SCSS syntax as you want. It is recommended to write
 all of your CSS rules as SCSS, since at the very least the Sass minifier can
