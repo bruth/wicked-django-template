@@ -15,9 +15,24 @@
 
     optimizeCss: 'none',
 
-    // A reference here for any scripts that need to include cilantro
-    // modules
     paths: {},
+
+    shim: {
+        underscore: {
+            exports: '_'
+        },
+        backbone: {
+            deps: ['underscore', 'jquery'],
+            exports: 'Backbone'
+        },
+        bootstrap: ['jquery']
+    },
     
-    modules: [{}]
+    modules: [{
+        name: 'main',
+        exclude: ['environ', 'jquery', 'underscore', 'backbone']
+    }, {
+        name: 'environ',
+        include: ['jquery', 'underscore', 'backbone', 'core/mixins', 'bootstrap'] 
+    }]
 })

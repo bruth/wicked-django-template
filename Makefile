@@ -13,7 +13,7 @@ CSS_DIR = ${STATIC_DIR}/stylesheets/css
 COMPILE_SASS = `which sass` \
 	--scss \
 	--style=compressed \
-	-r ${SASS_DIR}/bourbon/lib/bourbon.rb \
+	-r ${SASS_DIR}/lib/bourbon/lib/bourbon.rb \
 	${SASS_DIR}:${CSS_DIR}
 
 COMPILE_COFFEE = `which coffee` -b -o ${JAVASCRIPT_SRC_DIR} -c ${COFFEE_DIR}

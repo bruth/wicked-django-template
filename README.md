@@ -1,12 +1,39 @@
-Bada$$ Django Template
-======================
+# Bada$$ Django Template
+
+## Install
+
+The preferred environment for the template is creating a virtual environment:
+
+```bash
+$ virtualenv myproject-env
+$ cd myproject-env
+$ pip install django
+```
+
+Now run the `startproject` command:
+
+```bash
+$ django-admin.py startproject --template https://github.com/bruth/badass-django-template/zipball/master -e py,ini,gitignore,in,conf,md,sample -n Makefile myproject .
+```
+
+Since Github puts the contents in a sub-directory, explicity set the target
+directory, e.g. `.`. You can then rename the output directory to whatever
+you want (the example directory name below most likely won't be the same
+as yours).
+
+```bash
+$ mv bruth-badass-django-template-705b8f2 myproject
+```
+
+## Features
+
 - clean project structure
-    - separate ``{{ project_name }}`` directory for Django code
     - ``_site`` directory for web server document root
         - copied static files and user uploaded media files
         - works well with nginx's ``try_files`` directive
         - ``maintenance`` directory for toggling maintenance mode's
-- tested server configurations for nginx, uWSGI, and Supervisor
+- server configurations for nginx, uWSGI, and Supervisor
+    - note: the paths will need to be updated to match your environment
 - tiered settings for easier cross-environment support
     - ``global_settings.py`` for environment-independent settings
     - ``local_settings.py`` for environment-specific settings (not versioned)
@@ -23,13 +50,11 @@ Bada$$ Django Template
     - ``make optimize``
     - includes ``app.build.js`` file for single-file JavaScript optimization
     - compiles javascript/src => javascript/min
-- context processor for including JavaScript and CSS static urls
+- context processor for including more direct static urls
     - ``{{ CSS_URL }}``
     - ``{{ JAVASCRIPT_URL }}``
-- script in ``./bin/secret_key.py`` to output a ``SECRET_KEY`` for your
-    ``local_settings.py``
+    - ``{{ IMAGES_URL }}``
 - simple, but useful fabfile.py for common commands
-- ...HTML5 boilerplate hotness
 
 Dependencies
 ------------
@@ -39,6 +64,7 @@ Fabfile Commands
 ----------------
 - ``mm_on`` - turns on maintenance mode
 - ``mm_off`` - turns off maintenance mode
+- ``deploy`` - deploy a specific Git tag on the host
 
 Makefile Commands
 -----------------

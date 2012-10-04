@@ -21,17 +21,30 @@
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
-    <link rel=stylesheet href={{ CSS_URL }}/style.css>
+    <link rel=stylesheet href="{{ CSS_URL }}/style.css">
     
     <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
 </head>
 
 <body>
     <header>
-        {% block header %}{% endblock %}
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a href="#" class=branch>Brand</a>
+                    <ul class="nav">
+                        {% block header_links %}{% endblock %}
+                    </ul>
+                </div>
+            </div>
+        </div>
     </header>
 
-    {% block content %}{% endblock %}
+    <div class="container-fluid">
+        <div class="row-fluid">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
 
     <footer>
         {% block footer %}{% endblock %}
