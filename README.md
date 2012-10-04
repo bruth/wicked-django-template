@@ -47,7 +47,7 @@ $ make sass coffee watch collect
 ```
 
 _Note, the `sass` and `coffee` targets are called first to ensure the compiled
-files exist before attempting to collec them. Just running `watch` spawns
+files exist before attempting to collect them. Just running `watch` spawns
 background processes and may result in a race condition with the `collect`
 command._
 
