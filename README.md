@@ -40,11 +40,16 @@ $ npm install coffee-script -g
 ```
 
 Execute the following commands to begin watching the static files and
-collect the files (using Django's collectstatic command)
+collect the files (using Django's collectstatic command):
 
 ```bash
-$ make watch collect
+$ make sass coffee watch collect
 ```
+
+_Note, the `sass` and `coffee` targets are called first to ensure the compiled
+files exist before attempting to collec them. Just running `watch` spawns
+background processes and may result in a race condition with the `collect`
+command._
 
 Then either start the built-in Django server:
 
