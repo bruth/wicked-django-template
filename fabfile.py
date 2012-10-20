@@ -9,7 +9,7 @@ from fabric.contrib.files import exists
 
 
 HOSTS_MESSAGE = """\
-Before using this fabfile, you must create a .hosts in your project
+Before using this fabfile, you must create a .fabhosts in your project
 directory. It is a JSON file with the following structure:
 
     {
@@ -47,9 +47,9 @@ object, but the above settings are required at a minimum.
 
 # A few setup steps and environment checks
 curdir = os.path.dirname(os.path.abspath(__file__))
-hosts_file = os.path.join(curdir, '.hosts')
+hosts_file = os.path.join(curdir, '.fabhosts')
 
-# Check for the .hosts file
+# Check for the .fabhosts file
 if not os.path.exists(hosts_file):
     abort(white(HOSTS_MESSAGE))
 

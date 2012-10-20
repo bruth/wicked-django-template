@@ -89,7 +89,7 @@ $ uwsgi --ini server/uwsgi/local.ini --protocol http --socket 127.0.0.1:8000 --c
     - ``{{ CSS_URL }}``
     - ``{{ JAVASCRIPT_URL }}``
     - ``{{ IMAGES_URL }}``
-- simple, but useful fabfile.py for common commands
+- full-featured fabfile.py for one-command deployment
 
 ## Dependencies
 
