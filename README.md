@@ -1,8 +1,23 @@
 # Bada$$ Django Template
 
-## Install
+## Prerequisites
 
-The preferred environment for the template is creating a virtual environment:
+- Python 2.7
+
+## Setup & Install
+
+Install [virtualenv](http://pypi.python.org/pypi/virtualenv):
+
+```bash
+$ wget http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.8.2.tar.gz
+$ tar zxf virtualenv-1.8.2.tar.gz
+$ cd virtualenv-1.8.2
+$ python setup.py install
+```
+_You may need to do that last step as root. Just make sure you use the
+correct Python binary for OSes with multiple Python versions._
+
+Create a virtual environment for the project:
 
 ```bash
 $ virtualenv myproject-env
@@ -24,30 +39,6 @@ Install the base requirements:
 $ pip install -r requirements.txt
 ```
 
-Ensure Ruby and the Sass gem are installed:
-
-```bash
-$ gem install sass
-```
-
-Ensure Node, NPM and CoffeeScript are installed:
-
-```bash
-$ npm install coffee-script -g
-```
-
-Execute the following commands to begin watching the static files and
-collect the files (using Django's collectstatic command):
-
-```bash
-$ make sass coffee watch collect
-```
-
-_Note, the `sass` and `coffee` targets are called first to ensure the compiled
-files exist before attempting to collect them. Just running `watch` spawns
-background processes and may result in a race condition with the `collect`
-command._
-
 Then either start the built-in Django server:
 
 ```bash
@@ -63,32 +54,32 @@ $ uwsgi --ini server/uwsgi/local.ini --protocol http --socket 127.0.0.1:8000 --c
 ## Features
 
 - clean project structure
-    - ``_site`` directory for web server document root
+    - `_site` directory for web server document root
         - copied static files and user uploaded media files
-        - works well with nginx's ``try_files`` directive
-        - ``maintenance`` directory for toggling maintenance mode's
+        - works well with nginx's `try_files` directive
+        - `maintenance` directory for toggling maintenance mode's
 - server configurations for nginx, uWSGI, and Supervisor
     - note: the paths will need to be updated to match your environment
 - tiered settings for easier cross-environment support
-    - ``global_settings.py`` for environment-independent settings
-    - ``local_settings.py`` for environment-specific settings (not versioned)
-    - ``settings.py`` for bringing them together and post-setup
-- ``local_settings.py.sample`` template
+    - `global_settings.py` for environment-independent settings
+    - `local_settings.py` for environment-specific settings (not versioned)
+    - `settings.py` for bringing them together and post-setup
+- `local_settings.py.sample` template
 - a clean static directory for large Web app development
 - wicked hot Makefile for watching static files pre-processors:
-    - ``make watch``
+    - `make watch`
     - CoffeeScript (requires Node and CoffeeScript)
     - SCSS (requires Ruby and Sass)
     - compiles scss => css
     - compiles coffee => javascript/src
 - integration with [r.js](https://github.com/jrburke/r.js/)
-    - ``make optimize``
-    - includes ``app.build.js`` file for single-file JavaScript optimization
+    - `make optimize`
+    - includes `app.build.js` file for single-file JavaScript optimization
     - compiles javascript/src => javascript/min
 - context processor for including more direct static urls
-    - ``{{ CSS_URL }}``
-    - ``{{ JAVASCRIPT_URL }}``
-    - ``{{ IMAGES_URL }}``
+    - `{{ CSS_URL }}`
+    - `{{ JAVASCRIPT_URL }}`
+    - `{{ IMAGES_URL }}`
 - full-featured fabfile.py for one-command deployment
 
 ## Dependencies
@@ -101,45 +92,69 @@ $ uwsgi --ini server/uwsgi/local.ini --protocol http --socket 127.0.0.1:8000 --c
 
 ## Makefile Commands
 
-- ``build`` - builds and initializes all submodules, compiles SCSS and
+- `build` - builds and initializes all submodules, compiles SCSS and
     CoffeeScript and optimizes JavaScript
-- ``watch`` - watches the CoffeeScript and SCSS files in the background
+- `watch` - watches the CoffeeScript and SCSS files in the background
 for changes and automatically recompiles the files
-- ``unwatch`` - stops watching the CoffeeScript and SCSS files
-- ``sass`` - one-time explicit recompilation of SCSS files
-- ``coffee`` - one-time explicit recompilation of CoffeeScript files
+- `unwatch` - stops watching the CoffeeScript and SCSS files
+- `sass` - one-time explicit recompilation of SCSS files
+- `coffee` - one-time explicit recompilation of CoffeeScript files
 
 ## Fabfile Commands
 
-- ``mm_on`` - turns on maintenance mode
-- ``mm_off`` - turns off maintenance mode
-- ``deploy`` - deploy a specific Git tag on the host
+- `mm_on` - turns on maintenance mode
+- `mm_off` - turns off maintenance mode
+- `deploy` - deploy a specific Git tag on the host
 
 
 ## Local Settings
 
-``local_settings.py`` is intentionally not versioned (via .gitignore). It should
+`local_settings.py` is intentionally not versioned (via .gitignore). It should
 contain any environment-specific settings and/or sensitive settings such as
-passwords, the ``SECRET_KEY`` and other information that should not be in version
-control. Defining ``local_settings.py`` is not mandatory but will warn if it does
+passwords, the `SECRET_KEY` and other information that should not be in version
+control. Defining `local_settings.py` is not mandatory but will warn if it does
 not exist.
 
 ## CoffeeScript/JavaScript Development
 
+Ensure Node, NPM and CoffeeScript are installed:
+
+```bash
+$ npm install coffee-script -g
+```
+
 CoffeeScript is lovely. The flow is simple:
 
 - write some CoffeeScript which automatically gets compiled in JavaScript
-(assuming you did ``make watch``)
-- when ready to test non-``DEBUG`` mode, run ``make optimize``
+(by doing `make watch`)
+- when ready to test non-`DEBUG` mode, run `make optimize`
 
-The ``app.build.js`` file will need to be updated to define which modules
+The `app.build.js` file will need to be updated to define which modules
 should be compiled to single files. It is recommended to take a tiered
 approach to reduce overall file size across pages and increase cache potential
 for libraries that won't change for a while, for example jQuery.
 
 ## SCSS Development
 
+Ensure Ruby and the Sass gem are installed:
+
+```bash
+$ gem install sass
+```
+
 [Sass](http://sass-lang.com/) is awesome. SCSS is a superset of CSS so you can
 use as much or as little SCSS syntax as you want. It is recommended to write
 all of your CSS rules as SCSS, since at the very least the Sass minifier can
 be taken advantage of.
+
+Execute the following commands to begin watching the static files and
+collect the files (using Django's collectstatic command):
+
+```bash
+$ make sass coffee watch collect
+```
+
+_Note, the `sass` and `coffee` targets are called first to ensure the compiled
+files exist before attempting to collect them. Just running `watch` spawns
+background processes and may result in a race condition with the `collect`
+command._
