@@ -14,7 +14,6 @@ directory. It is a JSON file with the following structure:
 
     {
         "_": {
-            "user": "bruth",
             "host_string": "example.com",
             "path": "~/sites/project-env/project",
             "repo_url": "git@github.com/bruth/project.git",
@@ -34,7 +33,6 @@ The "_" entry acts as the default/fallback for the other host
 settings, so you only have to define the host-specific settings.
 The below settings are required:
 
-* `user` - username to SSH into the host
 * `host_string` - hostname or IP address of the host server
 * `path` - path to the deployed project *within* it's virtual environment
 * `repo_url` - URL to project git repository
@@ -54,7 +52,6 @@ if not os.path.exists(hosts_file):
     abort(white(HOSTS_MESSAGE))
 
 base_settings = {
-    'user': '',
     'host_string': '',
     'path': '',
     'repo_url': '',
@@ -62,7 +59,7 @@ base_settings = {
     'supervisor_conf_dir': '',
 }
 
-required_settings = ['user', 'host_string', 'path', 'repo_url',
+required_settings = ['host_string', 'path', 'repo_url',
     'nginx_conf_dir', 'supervisor_conf_dir']
 
 
@@ -95,6 +92,7 @@ def get_hosts_settings():
 
 
 hosts = get_hosts_settings()
+
 
 def host_context(func):
     "Sets the context of the setting to the current host"
@@ -145,9 +143,7 @@ def reload_supervisor():
     with cd(env.path):
         run('ln -sf $PWD/server/supervisor/{host}.ini '
             '{supervisor_conf_dir}/{{ project_name }}-{host}.ini'.format(**env))
-
     run('supervisorctl update')
-    run('supervisorctl reread')
 
 
 @host_context
@@ -198,8 +194,7 @@ def upload_settings():
     local_path = os.path.join(curdir, 'settings/{}.py'.format(env.host))
     if os.path.exists(local_path):
         remote_path = os.path.join(env.path, '{{ project_name }}/conf/local_settings.py')
-        local('scp {local_path} {user}@{host_string}:{remote_path}'\
-            .format(local_path=local_path, remote_path=remote_path, **env))
+        put(local_path, remote_path)
     elif not confirm(yellow('No local settings found for host "{}". Continue anyway?'.format(env.host))):
         abort('No local settings found for host "{}". Aborting.')
 
