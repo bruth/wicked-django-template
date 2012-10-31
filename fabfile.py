@@ -149,7 +149,7 @@ def reload_supervisor():
 @host_context
 def reload_wsgi():
     "Gets the PID for the wsgi process and sends a HUP signal."
-    pid = run('supervisorctl pid {{ project_name }}')
+    pid = run('supervisorctl pid {{ project_name }}-{host}'.format(host=env.host))
     run('kill -HUP {}'.format(pid))
 
 
