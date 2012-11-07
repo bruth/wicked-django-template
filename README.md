@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Python 2.7
+- Python 2.6 or 2.7
 
 ## Setup & Install
 
@@ -84,7 +84,6 @@ $ uwsgi --ini server/uwsgi/local.ini --protocol http --socket 127.0.0.1:8000 --c
 
 ## Dependencies
 
-- Python 2.7 (because that's how I roll)
 - Ruby
 - Node
 - Ruby Sass gem
