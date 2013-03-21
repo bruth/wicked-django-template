@@ -1,5 +1,5 @@
 import os
-from global_settings import PROJECT_PATH, LOGGING
+from .global_settings import PROJECT_PATH, LOGGING
 
 # Uncomment to put the application in non-debug mode. This is useful
 # for testing error handling and messages.
