@@ -29,7 +29,7 @@ $ pip install django
 Now run the `startproject` command:
 
 ```bash
-$ django-admin.py startproject --template https://github.com/tjrivera/badass-django-template/zipball/master -e py,ini,gitignore,in,conf,md,sample -n Makefile myproject
+$ django-admin.py startproject --template https://github.com/bruth/badass-django-template/zipball/master -e py,ini,gitignore,in,conf,md,sample,json -n Gruntfile.coffee myproject
 $ cd myproject
 ```
 
