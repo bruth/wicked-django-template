@@ -73,7 +73,7 @@ $ uwsgi --ini server/uwsgi/local.ini --protocol http --socket 127.0.0.1:8000 --c
 - `local_settings.py.sample` template
 - a clean static directory for large Web app development
 - wicked hot Gruntfile for watching static files pre-processors:
-    - `make watch`
+    - `grunt watch`
     - CoffeeScript (requires Node and CoffeeScript)
     - SCSS (requires Ruby and Sass)
     - compiles scss => css
