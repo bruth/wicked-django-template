@@ -9,9 +9,9 @@
 Install [virtualenv](http://pypi.python.org/pypi/virtualenv):
 
 ```bash
-$ wget http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.8.2.tar.gz
-$ tar zxf virtualenv-1.8.2.tar.gz
-$ cd virtualenv-1.8.2
+$ wget http://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.10.1.tar.gz
+$ tar zxf virtualenv-1.10.1.tar.gz
+$ cd virtualenv-1.10.1
 $ python setup.py install
 ```
 _You may need to do that last step as root. Just make sure you use the
@@ -29,7 +29,7 @@ $ pip install django
 Now run the `startproject` command:
 
 ```bash
-$ django-admin.py startproject --template https://github.com/bruth/badass-django-template/zipball/master -e py,ini,gitignore,in,conf,md,sample -n Makefile myproject
+$ django-admin.py startproject --template https://github.com/tjrivera/badass-django-template/zipball/master -e py,ini,gitignore,in,conf,md,sample -n Makefile myproject
 $ cd myproject
 ```
 
@@ -39,6 +39,12 @@ Install the base requirements:
 $ pip install -r requirements.txt
 ```
 
+Build your base javascript and css files:
+
+```base
+$ npm install
+$ grunt
+```
 Then either start the built-in Django server:
 
 ```bash
@@ -66,15 +72,14 @@ $ uwsgi --ini server/uwsgi/local.ini --protocol http --socket 127.0.0.1:8000 --c
     - `settings.py` for bringing them together and post-setup
 - `local_settings.py.sample` template
 - a clean static directory for large Web app development
-- wicked hot Makefile for watching static files pre-processors:
+- wicked hot Gruntfile for watching static files pre-processors:
     - `make watch`
     - CoffeeScript (requires Node and CoffeeScript)
     - SCSS (requires Ruby and Sass)
     - compiles scss => css
     - compiles coffee => javascript/src
 - integration with [r.js](https://github.com/jrburke/r.js/)
-    - `make optimize`
-    - includes `app.build.js` file for single-file JavaScript optimization
+    - `grunt requirejs`
     - compiles javascript/src => javascript/min
 - context processor for including more direct static urls
     - `{{ CSS_URL }}`
@@ -86,17 +91,16 @@ $ uwsgi --ini server/uwsgi/local.ini --protocol http --socket 127.0.0.1:8000 --c
 
 - Ruby
 - Node
-- Ruby Sass gem
+- Ruby Compass gem
 - Node CoffeeScript module
 
-## Makefile Commands
+## Gruntfile Commands
 
 - `build` - builds and initializes all submodules, compiles SCSS and
     CoffeeScript and optimizes JavaScript
 - `watch` - watches the CoffeeScript and SCSS files in the background
 for changes and automatically recompiles the files
-- `unwatch` - stops watching the CoffeeScript and SCSS files
-- `sass` - one-time explicit recompilation of SCSS files
+- `compass` - one-time explicit recompilation of SCSS files
 - `coffee` - one-time explicit recompilation of CoffeeScript files
 
 ## Fabfile Commands
@@ -128,17 +132,17 @@ CoffeeScript is lovely. The flow is simple:
 (by doing `make watch`)
 - when ready to test non-`DEBUG` mode, run `make optimize`
 
-The `app.build.js` file will need to be updated to define which modules
+The 'Gruntfile.coffee' file will need to be updated to define which modules
 should be compiled to single files. It is recommended to take a tiered
 approach to reduce overall file size across pages and increase cache potential
 for libraries that won't change for a while, for example jQuery.
 
 ## SCSS Development
 
-Ensure Ruby and the Sass gem are installed:
+Ensure Ruby and the Compass gem are installed:
 
 ```bash
-$ gem install sass
+$ gem install compass
 ```
 
 [Sass](http://sass-lang.com/) is awesome. SCSS is a superset of CSS so you can
@@ -150,7 +154,7 @@ Execute the following commands to begin watching the static files and
 collect the files (using Django's collectstatic command):
 
 ```bash
-$ make sass coffee watch collect
+$ grunt sass coffee watch collect
 ```
 
 _Note, the `sass` and `coffee` targets are called first to ensure the compiled
