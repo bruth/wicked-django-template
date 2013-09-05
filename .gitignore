@@ -11,6 +11,7 @@ sdist
 build
 pip-log.txt
 MANIFEST
+node_modules
 
 # Sass/Coffee
 .watch-pid
