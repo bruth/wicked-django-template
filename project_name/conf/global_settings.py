@@ -1,37 +1,51 @@
+"""
+Django settings for project_name project.
+
+For more information on this file, see
+https://docs.djangoproject.com/en/1.6/topics/settings/
+
+For the full list of settings and their values, see
+https://docs.djangoproject.com/en/1.6/ref/settings/
+"""
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
-# Import global settings to make it easier to extend settings. 
-from django.conf.global_settings import *
+BASE_PATH = os.path.join(os.path.dirname(__file__), '../..')
 
-# Import the project module to calculate directories relative to the module
-# location.
-PROJECT_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../..')
 
-# List all Django apps here. Note that standard Python libraries should not
-# be added to this list since Django will not recognize them as apps anyway.
-# An app is really only an "app" if a `models` module or package is defined.
-# Read more about projects vs. apps here:
-# https://docs.djangoproject.com/en/1.3/intro/tutorial01/#creating-models
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+TEMPLATE_DEBUG = True
+
+ALLOWED_HOSTS = []
+
 INSTALLED_APPS = (
-    '{{ project_name }}',
-
-    'south',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.humanize',
-    'django.contrib.markup',
-    'django.contrib.messages',
     'django.contrib.sessions',
-    'django.contrib.sites',
+    'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    '{{ project_name }}',
 )
 
 
-#
-# ADMINISTRATIVE
-#
+# Debug
+
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+
+
+# Administration
+
+WSGI_APPLICATION = '{{ project_name }}.wsgi.application'
 
 # Admins receive any error messages by email if DEBUG is False
 ADMINS = ()
@@ -42,101 +56,55 @@ MANAGERS = ADMINS
 # List of IP addresses which will show debug comments
 INTERNAL_IPS = ('127.0.0.1', '::1')
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
-
-#
-# DATABASES
-# Each database can be specified here, but passwords should be in a separate
-# file that is not versioned. Use ``local_settings.py``.
-#
+# Database
+# https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(PROJECT_PATH, '{{ project_name }}.db')
+        'NAME': os.path.join(BASE_PATH, '{{ project_name }}.db'),
     }
 }
 
+# Internationalization
+# https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-#
-# LOCALITY
-#
-
-# Local time zone for this installation. Choices can be found here:
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-# although not all choices may be available on all operating systems.
-# On Unix systems, a value of None will cause Django to use the same
-# timezone as the operating system.
-# If running in a Windows environment this must be set to the same as your
-# system time zone.
-TIME_ZONE = None
-
-# Language code for this installation. All choices can be found here:
-# http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
 
-# If you set this to False, Django will make some optimizations so as not
-# to load the internationalization machinery.
-USE_I18N = False
+TIME_ZONE = 'UTC'
 
-# If you set this to False, Django will not format dates, numbers and
-# calendars according to the current locale
-USE_L10N = False
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = True
 
 
-#
-# STATIC AND MEDIA
-# The application's static files should be placed in the STATIC_ROOT in
-# addition to other static files found in third-party apps. The MEDIA_ROOT
-# is intended for user uploaded files.
-#
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.join(PROJECT_PATH, '_site/media')
+MEDIA_ROOT = os.path.join(BASE_PATH, '_site/media')
 
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = '/media/'
 
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.join(PROJECT_PATH, '_site/static')
+STATIC_ROOT = os.path.join(BASE_PATH, '_site/static')
 
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
 
-# Additional locations of static files
-# Put strings here, like "/home/html/static" or "C:/www/django/static".
-# Always use forward slashes, even on Windows.
-# Don't forget to use absolute paths, not relative paths.
 STATICFILES_DIRS = ()
 
-#
-# TEMPLATES
-#
+# Templates
 
-# Project level templates and template directories that override
-# third-party app templates.
-TEMPLATE_DIRS = ()
-
-# Context processors are simply functions that return a dict which augments the
-# template context.
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
     '{{ project_name }}.context_processors.static',
 )
 
 
-#
-# URLS
-#
+# URLs
+
+ROOT_URLCONF = '{{ project_name }}.conf.urls'
 
 # FORCE_SCRIPT_NAME overrides the interpreted 'SCRIPT_NAME' provided by the
 # web server. since the URLs below are used for various purposes outside of
@@ -144,41 +112,26 @@ TEMPLATE_CONTEXT_PROCESSORS += (
 # reflect this discrepancy.
 FORCE_SCRIPT_NAME = ''
 
-ROOT_URLCONF = '{{ project_name }}.conf.urls'
-
-# LOGIN_URL = '/login/'
-# LOGOUT_URL = '/logout/'
-
-# For non-publicly accessible applications, the siteauth app can be used to
-# restrict access site-wide.
-# SITEAUTH_ACCESS_ORDER = 'allow/deny'
-# 
-# SITEAUTH_ALLOW_URLS = (
-#     r'^$',
-#     r'^log(in|out)/',
-#     r'^password/reset/',
-#     r'^(register|verify)/',
-# )
-
-#
-# MIDDLEWARE
-#
-
-MIDDLEWARE_CLASSES = (
-    'django.middleware.gzip.GZipMiddleware',
-    # 'django.middleware.cache.UpdateCacheMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    # 'django.middleware.cache.FetchFromCacheMiddleware',
+IGNORABLE_404_PATHS = (
+    r'robots.txt$',
+    r'favicon.ico$',
 )
 
 
-#
-# EMAIL
-#
+# Middleware
+
+MIDDLEWARE_CLASSES = (
+    'django.middleware.gzip.GZipMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+
+# Email
 
 SUPPORT_EMAIL = 'support@example.com'
 DEFAULT_FROM_EMAIL = 'support@example.com'
@@ -186,15 +139,8 @@ EMAIL_SUBJECT_PREFIX = '[{{ project_name }}] '
 SEND_BROKEN_LINK_EMAILS = False
 
 
-#
-# LOGGING
-#
+# Logging
 
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error.
-# See http://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -211,7 +157,7 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-    }, 
+    },
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
@@ -220,9 +166,7 @@ LOGGING = {
 }
 
 
-#
-# CACHE
-#
+# Caches
 
 # For production environments, the memcached backend is highly recommended
 CACHES = {
@@ -234,39 +178,17 @@ CACHES = {
     }
 }
 
-CACHE_MIDDLEWARE_SECONDS = 0
 
-# This is not necessary to set if the above `KEY_PREFIX` value is set since
-# the `KEY_PREFIX` namespaces all cache set by this application
-CACHE_MIDDLEWARE_KEY_PREFIX = '{{ project_name }}'
-
-
-#
-# SESSIONS AND COOKIES
-#
+# CSRF
 
 CSRF_COOKIE_NAME = '{{ project_name }}_csrftoken'
+
+
+# Sessions
+
 
 # SESSION_COOKIE_AGE = 60 * 20
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_COOKIE_NAME = '{{ project_name }}_sessionid'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_SAVE_EVERY_REQUEST = False
-
-
-#
-# OTHER PROJECT SETTINGS
-#
-
-# USE_ETAGS = True
-IGNORABLE_404_PATHS = (
-    r'robots.txt$',
-    r'favicon.ico$',
-)
-
-#
-# VARIOUS APP SETTINGS
-#
-
-# The primary key of the ``Site`` object for the Sites Framework
-SITE_ID = 1
