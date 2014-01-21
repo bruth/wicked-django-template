@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
-BASE_PATH = os.path.join(os.path.dirname(__file__), '../..')
+PROJECT_PATH = BASE_PATH = os.path.join(os.path.dirname(__file__), '../..')
 
 
 # Quick-start development settings - unsuitable for production
