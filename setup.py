@@ -9,18 +9,17 @@ kwargs = {
     'name': PACKAGE,
     'version': VERSION,
 
-    'packages': find_packages(exclude=['tests', '*.tests',
-        'tests.*', '*.tests.*']),
+    'packages': find_packages(exclude=[
+        'tests',
+        '*.tests',
+        'tests.*',
+        '*.tests.*',
+    ]),
 
-    'install_requires': [
-        'south',
-    ],
+    'install_requires': [],
 
-    # Tests
     'test_suite': 'test_suite',
-    'tests_require': [
-        'coverage',
-    ],
+    'tests_require': [],
 
     'author': '',
     'author_email': '',
