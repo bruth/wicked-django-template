@@ -10,6 +10,3 @@ DATABASES = {
 INSTALLED_APPS = (
     '{{ project_name }}',
 )
-
-TEST_RUNNER = 'tests.runner.ProfilingTestRunner'
-TEST_PROFILE = 'unittest.profile'
